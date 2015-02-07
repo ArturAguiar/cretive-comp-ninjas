@@ -40,7 +40,7 @@ public class TextToSpeechTest : MonoBehaviour
  
     void Start ()
     {
-        if( VoiceAvailable()>0 )
+        if( VoiceAvailable() > 0 )
         {
             InitVoice(); // init the engine
            
@@ -58,8 +58,8 @@ public class TextToSpeechTest : MonoBehaviour
             Debug.Log ("Number of voice : "+GetVoiceCount()); // Number of voice
            
             SetVoice(voice_nb); // 0 to voiceCount - 1
-            Debug.Log ("Voice Rate : "+GetVoiceRate());
-            SetVoiceRate(voice_rate);
+			SetVoiceRate(voice_rate);
+            Debug.Log ("Voice Rate : "+GetVoiceRate());            
            
             //Debug.Log ("Voice name : "+GetVoiceName(voice_nb));
 			Say("All system nominal. Engine, online, weapons, online.. We are ready. 9 ..... 8 ..... 7 ..... 6 ..... 5 ..... 4 ..... 3 ..... 2 ..... 1 ..... 0 ..... Take off");

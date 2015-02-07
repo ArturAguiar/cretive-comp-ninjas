@@ -28,6 +28,8 @@ public class MouseLook : MonoBehaviour {
 	public float minimumY = -60F;
 	public float maximumY = 60F;
 
+	private Camera cam;
+
 	float rotationY = 0F;
 
 	void Update ()
@@ -39,7 +41,11 @@ public class MouseLook : MonoBehaviour {
 			rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
 			rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 			
-			transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+			transform.localEulerAngles = new Vector3(0, rotationX, 0);//new Vector3(-rotationY, rotationX, 0);
+			//Debug.Log("angle is " + (-rotationY -90.0f));
+			cam.transform.localEulerAngles = new Vector3(-rotationY, 
+			                                             cam.transform.localEulerAngles.y, 
+			                                             cam.transform.localEulerAngles.z);
 		}
 		else if (axes == RotationAxes.MouseX)
 		{
@@ -50,12 +56,17 @@ public class MouseLook : MonoBehaviour {
 			rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
 			rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 			
-			transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
+			transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+			cam.transform.localEulerAngles = new Vector3(-rotationY, 
+			                                             cam.transform.localEulerAngles.y, 
+			                                             cam.transform.localEulerAngles.z);
 		}
 	}
 	
 	void Start ()
 	{
+		cam = this.gameObject.GetComponentsInChildren<Camera>()[0];
+
 		// Make the rigid body not change rotation
 		if (rigidbody)
 			rigidbody.freezeRotation = true;
