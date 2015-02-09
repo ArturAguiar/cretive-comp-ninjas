@@ -12,29 +12,29 @@ using System.Runtime.InteropServices;
  
 public class TextToSpeech : MonoBehaviour
 {
-    [DllImport ("Voice_speaker.dll", EntryPoint="VoiceAvailable")] private static extern int    VoiceAvailable();
-    [DllImport ("Voice_speaker.dll", EntryPoint="InitVoice")]      private static extern void   InitVoice();
-    [DllImport ("Voice_speaker.dll", EntryPoint="WaitUntilDone")]  private static extern int    WaitUntilDone(int millisec);
-    [DllImport ("Voice_speaker.dll", EntryPoint="FreeVoice")]      private static extern void   FreeVoice();
-    [DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceCount")]  private static extern int    GetVoiceCount();
+	[DllImport ("Voice_speaker.dll", EntryPoint="VoiceAvailable")] private static extern int    VoiceAvailable();
+	[DllImport ("Voice_speaker.dll", EntryPoint="InitVoice")]      private static extern void   InitVoice();
+	[DllImport ("Voice_speaker.dll", EntryPoint="WaitUntilDone")]  private static extern int    WaitUntilDone(int millisec);
+	[DllImport ("Voice_speaker.dll", EntryPoint="FreeVoice")]      private static extern void   FreeVoice();
+	[DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceCount")]  private static extern int    GetVoiceCount();
 
     // Unity V4.x.x
-    [DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceName")]   private static extern IntPtr GetVoiceName(int index);
+	[DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceName")]   private static extern IntPtr GetVoiceName(int index);
     //  other Unity version
     // [DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceName")]   private static extern string GetVoiceName(int index);
 
-    [DllImport ("Voice_speaker.dll", EntryPoint="SetVoice")]       private static extern void   SetVoice(int index);
-    [DllImport ("Voice_speaker.dll", EntryPoint="Say")]            private static extern void   Say(string ttospeak);
-    [DllImport ("Voice_speaker.dll", EntryPoint="SayAndWait")]     private static extern void   SayAndWait(string ttospeak);
-    [DllImport ("Voice_speaker.dll", EntryPoint="SpeakToFile")]    private static extern int    SpeakToFile(string filename, string ttospeak);
-    [DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceState")]  private static extern int    GetVoiceState();
-    [DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceVolume")] private static extern int    GetVoiceVolume();
-    [DllImport ("Voice_speaker.dll", EntryPoint="SetVoiceVolume")] private static extern void   SetVoiceVolume(int volume);
-    [DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceRate")]   private static extern int    GetVoiceRate();
-    [DllImport ("Voice_speaker.dll", EntryPoint="SetVoiceRate")]   private static extern void   SetVoiceRate(int rate);
-    [DllImport ("Voice_speaker.dll", EntryPoint="PauseVoice")]     private static extern void   PauseVoice();
-    [DllImport ("Voice_speaker.dll", EntryPoint="ResumeVoice")]    private static extern void   ResumeVoice();
- 
+	[DllImport ("Voice_speaker.dll", EntryPoint="SetVoice")]       private static extern void   SetVoice(int index);
+	[DllImport ("Voice_speaker.dll", EntryPoint="Say")]            private static extern void   Say(string ttospeak);
+	[DllImport ("Voice_speaker.dll", EntryPoint="SayAndWait")]     private static extern void   SayAndWait(string ttospeak);
+	[DllImport ("Voice_speaker.dll", EntryPoint="SpeakToFile")]    private static extern int    SpeakToFile(string filename, string ttospeak);
+	[DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceState")]  private static extern int    GetVoiceState();
+	[DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceVolume")] private static extern int    GetVoiceVolume();
+	[DllImport ("Voice_speaker.dll", EntryPoint="SetVoiceVolume")] private static extern void   SetVoiceVolume(int volume);
+	[DllImport ("Voice_speaker.dll", EntryPoint="GetVoiceRate")]   private static extern int    GetVoiceRate();
+	[DllImport ("Voice_speaker.dll", EntryPoint="SetVoiceRate")]   private static extern void   SetVoiceRate(int rate);
+	[DllImport ("Voice_speaker.dll", EntryPoint="PauseVoice")]     private static extern void   PauseVoice();
+	[DllImport ("Voice_speaker.dll", EntryPoint="ResumeVoice")]    private static extern void   ResumeVoice();
+
     public int voice_nb = 0;
 	public int voice_rate = 1;
  

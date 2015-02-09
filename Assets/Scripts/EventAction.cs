@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Text.RegularExpressions;
 
@@ -8,17 +9,18 @@ public class EventAction {
 	public enum Type {
 		WAIT,
 		DIALOG,
-		CHOICE
+		STORY_EVENT
 	}
 
 	private Text subtitles;
 	private TextToSpeech speech;
 
-	private const string REGEX = "(\\[.*\\])|(\".*\")|('.*')|(\\(.*\\))";
-	private const float TEXT_SPEED = 0.05f;
+	private const string REGEX = "(\\[[^\\[]*\\])|(\\([^\\(]*\\))";
+	private const float TEXT_SPEED = 20.0f; // characters per second
 
 	private Type type;
 	private float amount;
+	private Action<float> executeOnFinish;
 	private string rawText;
 	private string cleanText;
 	private EventAction next = null;
@@ -27,7 +29,10 @@ public class EventAction {
 
 	private int tickCount = 0;
 
-	public EventAction(Controller controller, Type type, float amount, string text = "")
+	private float lastCharTimestamp;
+	private int charCounter = 0;
+
+	public EventAction(Controller controller, Type type, float amount, string text = "", Action<float> executeOnFinish = null)
 	{
 		this.subtitles = controller.GetSubtitles();
 		this.speech = controller.GetTextToSpeech();
@@ -36,6 +41,7 @@ public class EventAction {
 		this.rawText = text;
 		this.cleanText = Regex.Replace(text, REGEX, "");
 		this.amount = amount;
+		this.executeOnFinish = executeOnFinish;
 	}
 
 	public EventAction Tick()
@@ -47,6 +53,7 @@ public class EventAction {
 			{
 				//SpeakAndSub();
 				Speak(this.rawText);
+				lastCharTimestamp = Time.time;
 			}
 			else if (tickCount >= 30 && startTime <= 0.0f && speech.IsDoneSaying())
 			{
@@ -55,10 +62,16 @@ public class EventAction {
 
 			if (this.cleanText.Length > 0)
 			{
-				int numChars = (int)(tickCount * TEXT_SPEED);
-				numChars = Mathf.Clamp(numChars, 0, cleanText.Length);
+				if (Time.time - lastCharTimestamp >= 1.0f / TEXT_SPEED)
+				{
+					charCounter++;
+					lastCharTimestamp = Time.time;
+				}
+				//int numChars = (int)(tickCount * TEXT_SPEED);
+				//numChars = Mathf.Clamp(numChars, 0, cleanText.Length);
+				charCounter = Mathf.Clamp(charCounter, 0, cleanText.Length);
 				
-				SetSubtitle(this.cleanText.Substring(0, numChars));
+				SetSubtitle(this.cleanText.Substring(0, charCounter));
 			}
 			break;
 
@@ -76,6 +89,11 @@ public class EventAction {
 		if (startTime >= 0.0f && Time.time - startTime >= amount)
 		{
 			SetSubtitle("");
+
+			if (executeOnFinish != null)
+			{
+				executeOnFinish.Invoke(Time.time);
+			}
 			
 			return this.next;
 		}
@@ -105,4 +123,6 @@ public class EventAction {
 		SetSubtitle(cleanText);
 		Speak(this.rawText);
 	}
+
+
 }
