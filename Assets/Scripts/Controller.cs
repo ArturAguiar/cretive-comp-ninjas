@@ -133,6 +133,8 @@ public class Controller : MonoBehaviour
 			}
 		}
 
+		//Debug.Log(response);
+
 		if (currentAction == null)
 		{
 			currentAction = new EventAction(this, EventAction.Type.DIALOG, 1.0f, response);

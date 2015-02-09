@@ -29,6 +29,7 @@ public class EventAction {
 
 	private int tickCount = 0;
 
+
 	private float lastCharTimestamp;
 	private int charCounter = 0;
 
