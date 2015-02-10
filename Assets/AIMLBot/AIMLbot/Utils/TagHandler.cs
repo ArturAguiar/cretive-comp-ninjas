@@ -35,7 +35,7 @@ namespace AIMLbot.Utils
             if (Assemblies.ContainsKey(this.AssemblyName))
             {
                 Assembly tagDLL = (Assembly)Assemblies[this.AssemblyName]; 
-                Type[] tagDLLTypes = tagDLL.GetTypes();
+                //Type[] tagDLLTypes = tagDLL.GetTypes();
                 return (AIMLTagHandler)tagDLL.CreateInstance(this.ClassName);
             }
             else
